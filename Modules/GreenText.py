@@ -15,7 +15,7 @@ from Exceptions.ReplyingException import ReplyingException
 async def greentextan(client, message):
 	msg = message.content if not message.content.startswith('>') else message.content[1:]
 	await client.send_message(message.channel, u'```css\n>{}\n```'.format(msg))
-	await MsgUtils.send_random_image(client, ImageFolders.REACTION_FOLDER, message.channel)
+	await MsgUtils.send_random_image(client, client.REPLY_FOLDER, message.channel)
 	
 def roll_for_greentext(client, message):
 	isGreenTextan = randint(1, 100)
@@ -34,6 +34,7 @@ class GreenText():
 		self.bot = bot
 		bot.GreentextChance = 10
 		bot.TermsForGreentext = ['>mcq', '>tfw', '>mfw']
+		bot.REPLY_FOLDER = ImageFolders.REACTION_FOLDER
 		
 	##Listeners
 
@@ -52,6 +53,13 @@ class GreenText():
 	async def set_quote_rate(self, rate):
 		self.bot.GreentextChance = int(rate)
 		print('GreenTextChance is now {}%'.format(self.bot.GreentextChance))
+		
+	@commands.command(name = 'engage_smug_protocol')
+	@commands.check(AccessChecks.isMaster)
+	async def smug_protocol(self):
+		self.bot.REPLY_FOLDER = ImageFolders.SMUG_FOLDER
+		self.bot.GreentextChance = 100
+		print('Smug protocol engaged!')
 
 	@commands.command(name = 'react')
 	@commands.check(AccessChecks.isMaster)
