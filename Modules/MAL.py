@@ -44,6 +44,7 @@ class MAL():
 	##
 	
 	@anime.error
+	@manga.error
 	async def on_anime_error(self, error, ctx):
 		if isinstance(error, ReplyingException):
 			await error.MessageCommand(ctx.bot)
