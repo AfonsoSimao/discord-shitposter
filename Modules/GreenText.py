@@ -48,20 +48,20 @@ class GreenText():
 
 	##Commands
 
-	@commands.command(name = 'setquoterate')
+	@commands.command(name = 'setquoterate', hidden=True)
 	@commands.check(AccessChecks.isMaster)
 	async def set_quote_rate(self, rate):
 		self.bot.GreentextChance = int(rate)
 		print('GreenTextChance is now {}%'.format(self.bot.GreentextChance))
 		
-	@commands.command(name = 'engage_smug_protocol')
+	@commands.command(name = 'engage_smug_protocol', hidden=True)
 	@commands.check(AccessChecks.isMaster)
 	async def smug_protocol(self):
 		self.bot.REPLY_FOLDER = ImageFolders.SMUG_FOLDER
 		self.bot.GreentextChance = 100
 		print('Smug protocol engaged!')
 
-	@commands.command(name = 'react')
+	@commands.command(name = 'react', hidden=True)
 	@commands.check(AccessChecks.isMaster)
 	async def react(self):
 		await self.bot.add_reaction(Emoji(name="ok_hand"))
