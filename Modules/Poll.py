@@ -26,16 +26,20 @@ class Poll():
 	@commands.command(pass_context=True)
 	async def yes(self, ctx, pollid):
 		"""<poll_id> Votes 'yes' on a poll."""
-		PollService.add_vote(ctx.message.author.name, 'yes', int(pollid))
-		print("Vote Accepted!")
-		await self.bot.say("Vote Accepted!")
+		if PollService.add_vote(ctx.message.author.name, 'yes', int(pollid)):
+			print("Vote Accepted!")
+			await self.bot.say("Vote Accepted!")
+		else:
+			await self.bot.say("Please do not vote more than once >.<")
 		
 	@commands.command(pass_context=True)
 	async def no(self, ctx, pollid):
 		"""<poll_id> Votes 'no' on a poll."""
-		PollService.add_vote(ctx.message.author.name, 'no', int(pollid))
-		print("Vote Accepted!")
-		await self.bot.say("Vote Accepted!")
+		if PollService.add_vote(ctx.message.author.name, 'no', int(pollid)):
+			print("Vote Accepted!")
+			await self.bot.say("Vote Accepted!")
+		else:
+			await self.bot.say("Please do not vote more than once >.<")
 		
 	@commands.command()
 	async def list_polls(self):
@@ -52,7 +56,7 @@ class Poll():
 		
 	@commands.command()
 	async def poll_standing(self, pollid):
-		"""Shows the specified poll and its results."""
+		"""<poll_id> Shows the specified poll and its results."""
 		selPollId = int(pollid)
 		if selPollId is not None:
 			selectedPoll = PollService.get_poll(int(pollid))

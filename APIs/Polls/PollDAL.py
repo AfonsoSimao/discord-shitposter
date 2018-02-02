@@ -21,10 +21,14 @@ class PollBuilder:
 		self._pollStorage.insert({'poll': pollText, 'state': 'open', 'yes': [], 'no':[], 'created_on': datetime.datetime.strftime(datetime.date.today(), "%d/%m/%Y"), 'created_by': creator })
 		
 	def add_vote(self, user, choice, pollid):
-		print('{} votes {}!'.format(user, choice))
-		poll = _self.get_poll(pollid)
-		self._pollStorage.update(add(choice, [user]), doc_ids=[pollid])
-	
+		
+		poll = self.get_poll(pollid)
+		if user not in poll['yes'] and user not in poll['no']:
+			self._pollStorage.update(add(choice, [user]), doc_ids=[pollid])
+			print('{} votes {}!'.format(user, choice))
+			return True
+		return False
+		
 	def close_poll(self, pollid):
 		self._pollStorage.update({'state': 'closed'}, doc_ids=[pollid])
 		print('Poll\'s Closed! {}'.format(pollid))

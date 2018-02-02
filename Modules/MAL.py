@@ -1,4 +1,4 @@
-
+from discord import Embed
 import asyncio
 import Checks.AccessChecks as AccessChecks
 import Configs.MyCreds as MyCreds
@@ -32,7 +32,11 @@ class MAL():
 	async def anime(self, *, message):
 		response = search_mal_anime(message.strip())
 		print(response)
-		await self.bot.say(response)
+		#embed = Embed(title="Title", description="Desc", color=0x00ff00)
+		#embed.set_image(url="https://myanimelist.cdn-dena.com/images/anime/2/75259.jpg")
+		#embed.add_field(name="Field1", value="hi", inline=False)
+		#embed.add_field(name="Field2", value="hi2", inline=True)
+		await self.bot.say('',embed=response)#, embed=embed)
 		
 	@commands.command()
 	@commands.check(AccessChecks.check_passive_mode)
