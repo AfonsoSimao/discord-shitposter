@@ -7,7 +7,7 @@ from discord.ext import commands
 from Exceptions.ReplyingException import ReplyingException
 
 
-startup_extensions = ["GreenText", "MAL", "Poll"]
+startup_extensions = ["GreenText", "Polls.Poll", "Sandbox", "MAL.MALController"]
 
 client = commands.Bot(command_prefix='!')
 	

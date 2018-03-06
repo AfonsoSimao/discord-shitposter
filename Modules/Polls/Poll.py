@@ -3,7 +3,7 @@ import Checks.AccessChecks as AccessChecks
 
 from discord.ext import commands
 from Exceptions.ReplyingException import ReplyingException
-from APIs.Polls.PollDAL import PollBuilder as PollDAL
+from Modules.Polls.PollDAL import PollBuilder as PollDAL
 
 PollService = PollDAL()
 
