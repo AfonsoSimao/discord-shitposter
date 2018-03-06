@@ -7,15 +7,15 @@ def format_anime(element):
 	
 	desc = element.english if element.english is not None else ''
 	
-	embed = Embed(title=element.title, description=desc, color=0x00ff00, url="https://myanimelist.net/anime/{}\n".format(element.id))
-	embed.set_thumbnail(url=element.image)
-	#embed.set_image(url="https://myanimelist.cdn-dena.com/images/anime/2/75259.jpg")
-	embed.add_field(name="Type", value=element.type, inline=True)
+	embed = Embed(title=element.title, description=element.type, color=0x00ff00, url="https://myanimelist.net/anime/{}\n".format(element.id))
+	#embed.set_thumbnail(url=element.image)
+	embed.set_image(url=element.image)
 	embed.add_field(name="Status", value=element.status, inline=True)
 	embed.add_field(name="Episodes", value=element.episodes, inline=True)
 	embed.add_field(name="Score", value=element.score, inline=True)
+	embed.add_field(name="Plot", value=element.synopsis, inline=False)
 	
-	embed.set_footer(text = element.synopsis)
+	embed.set_footer(text = "From {} to {}".format(element.start_date, element.end_date if element.end_date is not None else "\u2014"))
 	
 	
 	

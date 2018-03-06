@@ -12,12 +12,12 @@ class MALAPI:
 		self._pwd = pwd		
 		
 	def get_anime(self, query):
-		return self._get(query, ANIME_SEARCH_URL, "anime")
+		return self._get(query, ANIME_SEARCH_URL)
 		
 	def get_manga(self, query):
-		return self._get(query, MANGA_SEARCH_URL, "manga")
+		return self._get(query, MANGA_SEARCH_URL)
 		
-	def _get(self, query, apiUrl, type):
+	def _get(self, query, apiUrl):
 		query = query.lower()
 		
 		resp = requests.get(apiUrl.format(query.replace(' ', '+')), auth=(self._user, self._pwd))

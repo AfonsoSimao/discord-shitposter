@@ -17,6 +17,6 @@ def from_xml_string(xml_string):
 	for child in item:
 		setattr(parsed, child.tag, child.text)
 	
-	parsed.synopsis = html.unescape(html.unescape(parsed.synopsis)).replace('<br />', '\n')
+	parsed.synopsis = html.unescape(html.unescape(parsed.synopsis)).replace('<br />', '\n').replace('\n\n\n', '\n')
 		
 	return parsed
