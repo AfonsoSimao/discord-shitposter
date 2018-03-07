@@ -2,6 +2,7 @@
 import json
 import requests
 import Modules.MAL.Mappers.MALtoLocalMapper as MALMapper
+import Modules.MAL.Mappers.JikantoLocalMapper as JikanMapper
 
 ANIME_SEARCH_URL = "https://api.jikan.me/anime/{}"
 MANGA_SEARCH_URL = "https://myanimelist.net/api/manga/search.xml?q={}"
@@ -26,4 +27,4 @@ class JikanAPI:
 		if(resp.status_code == 204):
 			return None
 	
-		return resp.json()
+		return JikanMapper.from_json_object(resp.json())

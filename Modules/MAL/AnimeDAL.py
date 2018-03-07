@@ -4,7 +4,7 @@ import Configs.MyCreds as MyCreds
 from Storage.Cache import Cache
 from Modules.MAL.APIs.MALAPI import MALAPI
 from Modules.MAL.APIs.JikanAPI import JikanAPI
-from Modules.MAL.LocalEntry import LocalEntry
+
 
 
 class AnimeDAL:
@@ -35,16 +35,22 @@ class AnimeDAL:
 		
 	def _compose_anime(self, query):
 		item = self._malAPI.get_anime(query)
-		'''
 		itemj = self._jikanAPI.get_anime(item.id)
 		
 		try:
-			itemj = LocalEntry(**(itemj))
-			print("after second get")
-			item.genre = itemj.genre
-			item.studio = itemj.studio
+			
+			item.source = itemj.source
+			item.aired_string = itemj.aired_string
+			item.duration = itemj.duration
+			item.rating = itemj.rating
+			item.rank = itemj.rank
+			item.broadcast = itemj.broadcast
 			item.related = itemj.related
-			print(item.genre[0].name)
+			item.studio = itemj.studio
+			item.genre = itemj.genre
+			item.opening_themes = itemj.opening_theme
+			item.ending_themes = itemj.ending_theme
+			
 		except (NameError, TypeError, AttributeError) as e:
 			print (e)
 			item = None
@@ -52,7 +58,7 @@ class AnimeDAL:
 			print(sys.exc_info()[0])
 			item = None
 		
-		'''
+		
 		return item
 		
 	def _compose_manga(self, query):
