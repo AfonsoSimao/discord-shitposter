@@ -5,7 +5,7 @@ import Modules.MAL.Mappers.MALtoLocalMapper as MALMapper
 import Modules.MAL.Mappers.JikantoLocalMapper as JikanMapper
 
 ANIME_SEARCH_URL = "https://api.jikan.me/anime/{}"
-MANGA_SEARCH_URL = "https://myanimelist.net/api/manga/search.xml?q={}"
+MANGA_SEARCH_URL = "https://api.jikan.me/manga/{}"
 
 class JikanAPI:
 

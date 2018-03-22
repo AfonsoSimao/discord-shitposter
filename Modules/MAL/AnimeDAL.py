@@ -62,4 +62,39 @@ class AnimeDAL:
 		return item
 		
 	def _compose_manga(self, query):
-		return self._malAPI.get_manga(query)
+		item = self._malAPI.get_manga(query)
+		itemj = self._jikanAPI.get_manga(item.id)
+		
+		try:
+			
+			item.volumes = itemj.volumes
+			item.chapters = itemj.chapters
+			item.published_string = itemj.published_string
+			item.rank = itemj.rank
+			item.related = itemj.related
+			item.author = itemj.author
+			item.genre = itemj.genre
+			
+		except (NameError, TypeError, AttributeError) as e:
+			print (e)
+			item = None
+		except:
+			print(sys.exc_info()[0])
+			item = None
+		
+		
+		return item
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		

@@ -13,7 +13,7 @@ class LocalEntry:
 		except (NameError, TypeError, AttributeError) as e:
 			print (e)
 		except:
-			print(sys.exc_info()[0])
+			print("LocalEntry_Init: {}".format(sys.exc_info()[0]))
 	
 	
 	

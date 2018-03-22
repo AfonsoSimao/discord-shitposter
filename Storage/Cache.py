@@ -52,10 +52,10 @@ class Cache:
 			else:
 				self._storage.insert(item.__dict__)
 		except (NameError, TypeError, AttributeError) as e:
-			print (e)
+			print ("Cache_Add: {}".format(e))
 			res = None
 		except:
-			print(sys.exc_info()[0])
+			print("Cache_Add: {}".format(sys.exc_info()[0]))
 			res = None
 				
 				
