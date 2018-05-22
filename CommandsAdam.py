@@ -7,12 +7,12 @@ from discord.ext import commands
 from Exceptions.ReplyingException import ReplyingException
 
 
-startup_extensions = ["GreenText", "Polls.Poll", "Sandbox", "MAL.MALController"]
+startup_extensions = ["GreenText", "Polls.Poll", "Sandbox", "MAL.MALController", "LinkArchive"]
 
 client = commands.Bot(command_prefix='!')
-	
+
 ##Events
-	
+
 @client.event
 async def on_ready():
 	print('Logged in as')
@@ -55,12 +55,12 @@ async def reload(extension_name : str):
 		return
 	await client.say("{} reloaded.".format(extension_name))
 
-	
+
 @client.command(name='rstatus', hidden=True)
 @commands.check(AccessChecks.isMaster)
 async def reset_status_command():
 	await client.change_presence() #no parameter means not playing anything
-	
+
 @client.command(name='passive_mode', hidden=True)
 @commands.check(AccessChecks.isMaster)
 async def on_passive_command(message):
@@ -75,7 +75,7 @@ async def on_passive_command(message):
 async def on_passive_command_error(error, ctx):
 	if isinstance(error, ReplyingException):
 		await error.MessageCommand(client)
-	
+
 ##
 
 if __name__ == "__main__":
@@ -85,28 +85,6 @@ if __name__ == "__main__":
 		except Exception as e:
 			exc = '{}: {}'.format(type(e).__name__, e)
 			print('Failed to load extension {}\n{}'.format(extension, exc))
-	
-	
+
+
 	client.run(MyCreds.DiscordAdamToken)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
