@@ -32,17 +32,25 @@ class LinkArchive():
 	@commands.command(name = 'show_links', pass_context=True)
 	async def show_links(self, ctx, user:User=None):
 		"""[<@user>] Shows links posted by the mentioned user."""
-		u = user if user is not None else ctx.message.author
-		foundLinks = self.storage.get(u.id)
-		if foundLinks is not None and len(foundLinks) > 0:
-			linkList = "Links by {}\n".format(u.nick if u.nick is not None else u.name)
-			for item in foundLinks:
-				linkList += "- {}\n".format(item)
+		try:
+			u = user if user is not None else ctx.message.author
+			print("before get")
+			foundLinks = self.storage.get(u.id)
+			print("after get")
+			if foundLinks is not None and len(foundLinks) > 0:
+				linkList = "Links by {}\n".format(u.nick if u.nick is not None else u.name)
+				for item in foundLinks:
+					if (len(linkList) + len(item)) >= 2000:
+						await self.bot.say(linkList)
+						linkList = ""
+					linkList += "- {}\n".format(item)
 
-		else:
-			linkList = "No links found for user {}".format(u.nick if u.nick is not None else u.name)
-		await self.bot.say(linkList)
-
+			else:
+				linkList = "No links found for user {}".format(u.nick if u.nick is not None else u.name)
+			print("before say")
+			await self.bot.say(linkList)
+		except:
+			print ("Unexpected error: {0}", sys.exc_info()[0])
 	##
 
 	@show_links.error
