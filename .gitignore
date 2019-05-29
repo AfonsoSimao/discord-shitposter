@@ -103,8 +103,11 @@ ENV/
 
 *.png
 *.jpg
+*.gif
+*.bat
 
 /Configs/Constants.py
 /Configs/ImageFolders.py
 /Configs/MyCreds.py
+/Storage/TinyDB/*.json
 
