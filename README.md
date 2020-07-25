@@ -13,9 +13,9 @@ Download the repo, install the requirements...
 # Configuration
 The following files should be added to the Configs folder:
 
-1. MyCreds.py with DiscordAdamToken = <your_bot_token>. For MAL functionality also add MALUser = <your_mal_username> and MALPassword = <your_mal_password>
+1. MyCreds.py with `DiscordAdamToken = <your_bot_token>`. For MAL functionality also add `MALUser = <your_mal_username>` and `MALPassword = <your_mal_password>`
 
-2. Constants.py with ME = <your_discord_id>. Can be set to any int if you're the owner of the bot. If, for some reason, you're not the owner of the bot, setting this constant will allow your user to still pass isMaster() Checks
+2. Constants.py with `ME = <your_discord_id>`. Can be set to any int if you're the owner of the bot. If, for some reason, you're not the owner of the bot, setting this constant will allow your user to still pass `isMaster()` Checks
 
 3. ImageFolders.py with the following:
 
