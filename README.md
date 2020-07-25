@@ -1,7 +1,7 @@
 # discord-shitposter
 An experimental implementation of a discord bot using discord.py.
 
-#Installation
+# Installation
 Python 3.5.3 or higher is required.
 
 Download the repo, install the requirements...
