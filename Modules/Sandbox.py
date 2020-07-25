@@ -8,12 +8,26 @@ from Storage.KeyValueStorage import KeyValueStorage
 from discord.ext import commands
 from Exceptions.ReplyingException import ReplyingException
 
-class DevSandbox():
+class DevSandbox(commands.Cog):
 
 	def __init__(self, bot):
 		self.bot = bot
 
 	##Commands
+
+	@commands.command(hidden=True)
+	@AccessChecks.isMaster()
+	async def echo(self, ctx, msg : str):
+		print(msg)
+		await ctx.send("Message: {}".format(msg))
+
+	@commands.command(hidden=True)
+	@AccessChecks.isMaster()
+	async def dm(self, ctx, msg : str):
+		print(msg)
+		await ctx.author.send("Message: {}".format(msg))
+
+
 
 	@commands.command(hidden=True)
 	@commands.check(AccessChecks.isMaster)

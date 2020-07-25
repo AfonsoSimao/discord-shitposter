@@ -1,12 +1,21 @@
 # discord-shitposter
 An experimental implementation of a discord bot using discord.py.
 
+#Installation
+Python 3.5.3 or higher is required.
+
+Download the repo, install the requirements...
+
+pip install -r requirements.txt
+
+...then run CommandsAdam.py.
+
 # Configuration
 The following files should be added to the Configs folder:
 
 1. MyCreds.py with DiscordAdamToken = <your_bot_token>. For MAL functionality also add MALUser = <your_mal_username> and MALPassword = <your_mal_password>
 
-2. Constants.py with ADMIN_NAME = <your_discord_username>. Note that this should be your actual username and not your server nickname.
+2. Constants.py with ME = <your_discord_id>. Can be set to any int if you're the owner of the bot. If, for some reason, you're not the owner of the bot, setting this constant will allow your user to still pass isMaster() Checks
 
 3. ImageFolders.py with the following:
 

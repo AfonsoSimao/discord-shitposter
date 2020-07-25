@@ -6,17 +6,18 @@ import Configs.RegEx as REGEX
 import Checks.AccessChecks as AccessChecks
 
 from discord.ext import commands
-from discord import User
+from discord import Member
 from Exceptions.ReplyingException import ReplyingException
 from Storage.KeyValueStorage import KeyValueStorage
 
-class LinkArchive():
+class LinkArchive(commands.Cog):
 	def __init__(self, bot):
 		self.bot = bot
 		self.storage = KeyValueStorage('Storage/TinyDB/LinkRepository.json', True)
 
-	##Listeners
+	#region Listeners
 
+	@commands.Cog.listener()
 	async def on_message(self, message):
 		if not message.author.bot and not message.content.startswith('!'):
 			mText = message.content
@@ -25,38 +26,36 @@ class LinkArchive():
 				for url in urls:
 					mText = mText.replace(url, '<{}>'.format(url))
 				self.storage.add_value(message.author.id, mText)
-	##
+	#endregion
 
 	##Commands
 
 	@commands.command(name = 'show_links', pass_context=True)
-	async def show_links(self, ctx, user:User=None):
+	async def show_links(self, ctx, user:Member=None):
 		"""[<@user>] Shows links posted by the mentioned user."""
 		try:
-			u = user if user is not None else ctx.message.author
-			print("before get")
-			foundLinks = self.storage.get(u.id)
-			print("after get")
-			if foundLinks is not None and len(foundLinks) > 0:
-				linkList = "Links by {}\n".format(u.nick if u.nick is not None else u.name)
-				for item in foundLinks:
-					if (len(linkList) + len(item)) >= 2000:
-						await self.bot.say(linkList)
-						linkList = ""
-					linkList += "- {}\n".format(item)
-
+			if user is None:
+				linkList = "User not found."
 			else:
-				linkList = "No links found for user {}".format(u.nick if u.nick is not None else u.name)
-			print("before say")
-			await self.bot.say(linkList)
+				
+				foundLinks = self.storage.get(user.id) if user is not None else None
+				
+				if foundLinks is not None and len(foundLinks) > 0:
+					linkList = "Links by {}\n".format(user.nick if user.nick is not None else user.name)
+					for item in foundLinks:
+						if (len(linkList) + len(item)) >= 2000:
+							await ctx.author.send(linkList)
+							linkList = ""
+						linkList += "- {}\n".format(item)
+
+				else:
+					linkList = "No links found for user {}".format(user.nick if user.nick is not None else user.name)
+			
+			await ctx.author.send(linkList)
 		except:
-			print ("Unexpected error: {0}", sys.exc_info()[0])
+			print ("Unexpected error")
 	##
 
-	@show_links.error
-	async def on_passive_command_error(self, error, ctx):
-		if isinstance(error, ReplyingException):
-			await error.MessageCommand(ctx.bot)
 
 def setup(bot):
 	bot.add_cog(LinkArchive(bot))

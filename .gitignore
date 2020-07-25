@@ -91,6 +91,9 @@ ENV/
 .spyderproject
 .spyproject
 
+# VSCode project settings
+.vscode/
+
 # Rope project settings
 .ropeproject
 
@@ -105,6 +108,7 @@ ENV/
 *.jpg
 *.gif
 *.bat
+*.jpeg
 
 /Configs/Constants.py
 /Configs/ImageFolders.py

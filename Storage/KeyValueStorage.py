@@ -39,7 +39,5 @@ class KeyValueStorage:
 				self._storage.insert({"key":key,"value":[value]})
 		except (NameError, TypeError, AttributeError) as e:
 			print ("KeyValue_Add: {}".format(e))
-			res = None
 		except:
 			print("KeyValue_Add: {}".format(sys.exc_info()[0]))
-			res = None

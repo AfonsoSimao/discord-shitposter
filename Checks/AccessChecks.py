@@ -2,12 +2,15 @@ from Exceptions.ReplyingException import ReplyingException
 import Replies.ExceptionReplies as Replies
 import Configs.Constants as Constants
 
-def isMaster(ctx):
-	if ctx.message.author.name != Constants.ADMIN_NAME:
-		print("not master!")
-		raise ReplyingException(Replies.no_reply)
-		
-	return True
+from discord.ext.commands import check
+
+def isMaster():
+	async def predicate(ctx):
+		if ctx.author.id != Constants.ME or not await ctx.bot.is_owner(ctx.author):
+			raise ReplyingException(Replies.no_reply)
+		return True
+
+	return check(predicate)
 	
 def check_passive_mode(ctx):
 	
