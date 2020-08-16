@@ -6,7 +6,7 @@ import Checks.AccessChecks as AccessChecks
 from discord.ext import commands
 from Exceptions.ReplyingException import ReplyingException
 
-startup_extensions = ["GreenText", "LinkArchive", "Sandbox"]
+startup_extensions = ["GreenText", "LinkArchive", "MAL.MALController"]
 #startup_extensions = ["GreenText", "Polls.Poll", "Sandbox", "MAL.MALController", "LinkArchive"]
 
 client = commands.Bot(command_prefix='!')

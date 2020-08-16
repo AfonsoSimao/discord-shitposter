@@ -1,5 +1,8 @@
 
 import Configs.MyCreds as MyCreds
+import sys
+import asyncio
+import json
 
 from Storage.Cache import Cache
 from Modules.MAL.APIs.MALAPI import MALAPI
@@ -9,47 +12,34 @@ from Modules.MAL.APIs.JikanAPI import JikanAPI
 
 class AnimeDAL:
 	def __init__(self):
-		self._cache = Cache('Storage/TinyDB/localMAL.json')
-		self._malAPI = MALAPI(MyCreds.MALUser, MyCreds.MALPassword)
-		self._jikanAPI = JikanAPI()
+		self.__cache = Cache('Storage/TinyDB/localMAL.json')
+		#self.__malAPI = MALAPI(MyCreds.MALUser, MyCreds.MALPassword)
+		self.__jikanAPI = JikanAPI()
 
-	def get_anime(self, query):
-		return self._check_cache(query, "anime", AnimeDAL._compose_anime)
+	async def get_anime(self, query):
+		return await self.__check_cache(query, "anime", AnimeDAL.__compose_anime)
 		
-	def get_manga(self, query):
-		return self._check_cache(query, "manga", AnimeDAL._compose_manga)
+	async def get_manga(self, query):
+		return await self.__check_cache(query, "manga", AnimeDAL.__compose_manga)
 		
 		
-	def _check_cache(self, query, type, entrySupplier):
+	async def __check_cache(self, query, type, entrySupplier):
 		query = query.lower()
 		
-		item = self._cache.get(query, type)
+		item = self.__cache.get(query, type)
 		
 		if item is None:
-			item = entrySupplier(self, query)
+			item = await entrySupplier(self, query)
 			
 			if item is not None:
-				self._cache.add(query, item, type)
+				self.__cache.add(query, item, type)
 		
 		return item
 		
-	def _compose_anime(self, query):
-		item = self._malAPI.get_anime(query)
-		itemj = self._jikanAPI.get_anime(item.id)
-		
+	async def __compose_anime(self, query):
+		#item = self.__malAPI.get_anime(query)
 		try:
-			
-			item.source = itemj.source
-			item.aired_string = itemj.aired_string
-			item.duration = itemj.duration
-			item.rating = itemj.rating
-			item.rank = itemj.rank
-			item.broadcast = itemj.broadcast
-			item.related = itemj.related
-			item.studio = itemj.studio
-			item.genre = itemj.genre
-			item.opening_themes = itemj.opening_theme
-			item.ending_themes = itemj.ending_theme
+			return await self.__jikanAPI.search_anime(query)
 			
 		except (NameError, TypeError, AttributeError) as e:
 			print (e)
@@ -61,19 +51,10 @@ class AnimeDAL:
 		
 		return item
 		
-	def _compose_manga(self, query):
-		item = self._malAPI.get_manga(query)
-		itemj = self._jikanAPI.get_manga(item.id)
-		
+	async def __compose_manga(self, query):
+		#item = self.__malAPI.get_manga(query)
 		try:
-			
-			item.volumes = itemj.volumes
-			item.chapters = itemj.chapters
-			item.published_string = itemj.published_string
-			item.rank = itemj.rank
-			item.related = itemj.related
-			item.author = itemj.author
-			item.genre = itemj.genre
+			return await self.__jikanAPI.search_manga(query)
 			
 		except (NameError, TypeError, AttributeError) as e:
 			print (e)

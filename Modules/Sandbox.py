@@ -4,6 +4,7 @@ import time
 import asyncio
 import Checks.AccessChecks as AccessChecks
 from Storage.KeyValueStorage import KeyValueStorage
+from Modules.MAL.AnimeDAL import AnimeDAL
 
 from discord.ext import commands
 from Exceptions.ReplyingException import ReplyingException
@@ -26,6 +27,13 @@ class DevSandbox(commands.Cog):
 	async def dm(self, ctx, msg : str):
 		print(msg)
 		await ctx.author.send("Message: {}".format(msg))
+
+	@commands.command(hidden=True)
+	@AccessChecks.isMaster()
+	async def anime(self, ctx, *, query):
+		a = await AnimeDAL().get_anime(query)
+		a = None
+
 
 
 

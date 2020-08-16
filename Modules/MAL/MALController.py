@@ -8,31 +8,27 @@ from Modules.MAL.AnimeDAL import AnimeDAL
 from Exceptions.ReplyingException import ReplyingException
 
 
-class MAL():
+class MAL(commands.Cog):
 	def __init__(self, bot):
 		self.bot = bot
 		self.search_service = AnimeDAL()
 		
-	##Commands
+	#region Commands
 
 	@commands.command()
-	@commands.check(AccessChecks.check_passive_mode)
-	async def anime(self, *, message):
-		await self.bot.say(**(MALResultFormatter.format_anime(self.search_service.get_anime(message.strip()))))
+	@AccessChecks.check_passive_mode()
+	async def anime(self, ctx, *, message):
+		entry = await self.search_service.get_anime(message.strip())
+		await ctx.send(**(MALResultFormatter.format_anime(entry)))
 		
 		
 	@commands.command()
-	@commands.check(AccessChecks.check_passive_mode)
-	async def manga(self, *, message):
-		await self.bot.say(**(MALResultFormatter.format_manga(self.search_service.get_manga(message.strip()))))
+	@AccessChecks.check_passive_mode()
+	async def manga(self, ctx, *, message):
+		entry = await self.search_service.get_manga(message.strip())
+		await ctx.send(**(MALResultFormatter.format_manga(entry)))
 
-	##
-	
-	@anime.error
-	@manga.error
-	async def on_anime_error(self, error, ctx):
-		if isinstance(error, ReplyingException):
-			await error.MessageCommand(ctx.bot)
+	#endregion
 	
 def setup(bot):
 	bot.add_cog(MAL(bot))

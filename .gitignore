@@ -115,3 +115,4 @@ ENV/
 /Configs/MyCreds.py
 /Storage/TinyDB/*.json
 
+discord-bot.code-workspace

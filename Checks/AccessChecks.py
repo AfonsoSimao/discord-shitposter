@@ -12,9 +12,12 @@ def isMaster():
 
 	return check(predicate)
 	
-def check_passive_mode(ctx):
+def check_passive_mode():
 	
-	if not ctx.bot.PASSIVE_MODE == 0:
-		raise ReplyingException(Replies.sorry_reply)
-	
-	return True
+	async def predicate(ctx):
+		if not ctx.bot.PASSIVE_MODE == 0:
+			raise ReplyingException(Replies.sorry_reply)
+		
+		return True
+
+	return check(predicate)
